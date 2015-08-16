@@ -13,7 +13,6 @@ import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.NoNodeAvailableException;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
@@ -32,15 +31,13 @@ public class FounddotioEmitter implements IEmitter<ElasticsearchObject> {
 
 
     private final TransportClient founddotioClient;
-
-
+    private final String founddotioEndpoint;
+    private final int founddotioPort;
     /**
      * The amount of time to wait in between unsuccessful index requests (in milliseconds).
      * 10 seconds = 10 * 1000 = 10000
      */
     private long BACKOFF_PERIOD = 10000;
-    private final String founddotioEndpoint;
-    private final int founddotioPort;
 
     public FounddotioEmitter(KinesisConnectorConfiguration configuration) {
 
@@ -61,8 +58,6 @@ public class FounddotioEmitter implements IEmitter<ElasticsearchObject> {
         founddotioPort = configuration.ELASTICSEARCH_PORT;
 
         founddotioClient = new TransportClient(settings).addTransportAddress(new InetSocketTransportAddress(founddotioEndpoint, founddotioPort));
-
-
 
 
     }

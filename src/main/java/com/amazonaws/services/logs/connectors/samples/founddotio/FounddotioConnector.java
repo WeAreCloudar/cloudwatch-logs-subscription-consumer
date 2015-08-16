@@ -15,14 +15,12 @@ import java.io.InputStream;
 import java.util.Properties;
 
 
-public class FounddotioConnector extends KinesisConnectorExecutorBase<CloudWatchLogsEvent, ElasticsearchObject>{
+public class FounddotioConnector extends KinesisConnectorExecutorBase<CloudWatchLogsEvent, ElasticsearchObject> {
 
     private static final Log LOG = LogFactory.getLog(FounddotioConnector.class);
+    private static String CONFIG_FILE = FounddotioConnector.class.getSimpleName() + ".properties";
     private final FounddotioKinesisConnectorConfiguration config;
 
-
-
-    private static String CONFIG_FILE = FounddotioConnector.class.getSimpleName() + ".properties";
     /**
      * Creates a new CloudWatchLogsSubscriptionsExecutor.
      *
@@ -59,6 +57,11 @@ public class FounddotioConnector extends KinesisConnectorExecutorBase<CloudWatch
         super.initialize(config, new NullMetricsFactory());
     }
 
+    public static void main(String[] args) {
+        FounddotioConnector executor = new FounddotioConnector(CONFIG_FILE);
+        executor.run();
+    }
+
     @Override
     public KinesisConnectorRecordProcessorFactory<CloudWatchLogsEvent, ElasticsearchObject> getKinesisConnectorRecordProcessorFactory() {
         return new KinesisConnectorRecordProcessorFactory<CloudWatchLogsEvent, ElasticsearchObject>(new FounddotioPipeline(), getConfig());
@@ -66,11 +69,5 @@ public class FounddotioConnector extends KinesisConnectorExecutorBase<CloudWatch
 
     protected KinesisConnectorConfiguration getConfig() {
         return config;
-    }
-
-
-    public static void main(String[] args) {
-        FounddotioConnector executor = new FounddotioConnector(CONFIG_FILE);
-        executor.run();
     }
 }
