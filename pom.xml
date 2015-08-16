@@ -56,6 +56,19 @@
                 <connector.mainclass>com.amazonaws.services.logs.connectors.samples.s3.S3Connector</connector.mainclass>
             </properties>
         </profile>
+
+        <profile>
+            <id>Founddotio</id>
+            <activation>
+                <property>
+                    <name>connectorDestination</name>
+                    <value>elasticsearch</value>
+                </property>
+            </activation>
+            <properties>
+                <connector.mainclass>com.amazonaws.services.logs.connectors.samples.founddotio.FounddotioConnector</connector.mainclass>
+            </properties>
+        </profile>
         
     </profiles>
     
@@ -90,6 +103,12 @@
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>no.found.elasticsearch</groupId>
+            <artifactId>elasticsearch-transport-module</artifactId>
+            <version>0.8.9-1.4.0</version>
         </dependency>
     </dependencies>
 
